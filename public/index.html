@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>My Trend Search</title>
+	</head>
+	<body>
+		<input id="text" type="text" placeholder="Input any words" />
+		<input id="button" type="button" value="Search" />
+		<script src="superagent.js"></script>
+		<script>
+			var request = window.superagent;
+			
+			var text = document.getElementById('text');
+			var button = document.getElementById('button');
+			
+			var searching = false;
+			
+			function reqestToSearch() {
+				if (searching == true) return;
+				
+				searching = true;
+				request
+					.get('/trend')
+					.query({keyword: text.value})
+					.end(function(err, res){
+						console.log(res);
+						alert(res.body);
+						searching = false;
+					});
+			}
+			
+			button.addEventListener('click', reqestToSearch);
+		</script>
+	</body>
+</html>
